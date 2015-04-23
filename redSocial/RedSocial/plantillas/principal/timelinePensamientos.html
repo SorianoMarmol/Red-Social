@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block title %} Timeline: Pensamientos y Servicios {% endblock %}
+
+{% block content %}
+
+		<p><a href="{% url "pensamiento_crear" %}" class='btn btn-success btn-lg'>Nuevo Pensamiento</a></p>
+
+		{% for frasecomun in pensamiento %}
+
+<TABLE class="table table-striped" WIDTH=500>
+	<tr>
+		<td WIDTH=100 rowspan="3"> <B>{{frasecomun.tipoPensamiento}}</B> </td>
+		<td>Autor: </td>
+		<td>{{frasecomun.autor}} </td>
+	</tr>
+	<tr>
+		<td WIDTH=100 >Publicación: </td>
+		<td>{{frasecomun.publicacion}}</td>
+	</tr>
+	<tr>
+		<td>Fecha: </td>
+		<td>{{frasecomun.fecha}}</td>
+	</tr>
+	<br>
+</TABLE>
+{% if user.username ==  frasecomun.autor.usuario.username %}
+		<br><br><p><a href='{% url 'pensamiento_borrar' frasecomun.id %}' class='btn btn-danger'> Borrar Pensamiento</a></p>
+
+{% endif %}
+
+		{% endfor %}
+
+{% endblock %}

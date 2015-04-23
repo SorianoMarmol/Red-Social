@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<center><img src="{{ STATIC_URL }}images/web/archivos.png" width="120" height="110"alt=""></center><br>
+
+
+<h4><b>Lista de archivos enviados: </b></h4> <br><br>
+
+		{% for file in archivo %}
+ 			{% if user.username == file.perfilOrigen.usuario.username %}
+				
+				<div class="well well-sm">
+				<b>Nombre: {{ file }}</b>; Enviado a <b>{{ file.perfilDestino }}</b> en la fecha {{ file.fecha }}.  <a href="/download/{{file.id}}" class='fa fa-download fa-fw'></a><br> <br>
+				</div>
+
+			{% endif %}
+	 	{% endfor %}
+
+<h4><br><b>Lista de archivos recibidos: </b></h4> <br><br>
+
+		{% for file in archivo %}
+ 			{% if user.username == file.perfilDestino.usuario.username %}
+				<div class="well well-sm">
+				<b>Nombre: {{ file }}</b>; Enviado por <b>{{ file.perfilOrigen }}</b> en la fecha {{ file.fecha }}.  <a href="/download/{{file.id}}" class='fa fa-download fa-fw'></a><br> <br>
+				</div>
+
+			{% endif %}
+	 	{% endfor %}
+
+
+{% endblock %}

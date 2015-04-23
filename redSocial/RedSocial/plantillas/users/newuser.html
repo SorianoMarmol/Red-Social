@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% comment %} User input form {% endcomment %}
+
+{% block nav %}  {% endblock %}
+
+
+{% block content %} 
+
+<body onload="obtener_localizacion();">
+<script language="javascript">
+function obtener_localizacion() {
+
+  navigator.geolocation.getCurrentPosition(coordenadas);
+}
+function coordenadas(position) {
+  var latitud = position.coords.latitude;
+  var longitud = position.coords.longitude;
+
+  document.getElementById("id_coordy").value=longitud;
+  document.getElementById("id_coordx").value=latitud;
+
+}
+</script>
+
+	<h2>Nuevo Usuario</h2>
+
+	<form id='form' method='post' enctype='multipart/form-data' action=''>{% csrf_token %}
+	    <table class='formTable'>{{form}}</table>
+		<p><input type='submit' value='Aceptar'></p>
+	</form>
+
+{% endblock %}

@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block title %} Recuperar Contraseña {% endblock %}
+
+{% block content %}
+
+
+<form name="forgotPassword" method="POST" id="myFormid" action="http://10.1.0.90:8080/forgotPassword/">
+<div style="float:center;width:100%;">
+ Enter your E-mail ID</label><br/> <input type="text" name="email" size="25" /> 
+ <input type="submit" value="Submit" />
+ </div> 
+</form >

@@ -1,0 +1,106 @@
+
+
+{% extends 'base.html' %}
+{% load for_rangos %}
+{% block titulo %} {{perfil.nombre}} {% endblock %}
+{% block encabezado %} 
+	<h1>{{perfil.nombre}}</h1>
+{% endblock %}
+{% block content %}
+
+{% block localscripts %}
+
+
+{% endblock %}
+	<h2>Perfil de: {{perfil.alias}}</h2><br>
+	{% if perfil.esActivo %}
+		<h4>Este perfil es verdadero</h4>
+	{% else %}
+		<h4>Este perfil es falso</h4>
+	{% endif %}
+	<h4>Edad: {{perfil.edad}}</h4>
+	<h4>Genero: {{perfil.genero}}</h4>
+	<h4>Orientación sexual: {{perfil.orientacionSexual}}</h4>
+	<h4>Profesion: {{perfil.profesion}}</h4>
+	<h4>Estudios: {{perfil.estudios}}</h4>
+	<h4>Estado civil: {{perfil.estadoCivil}}</h4>
+	<h4>¿Que buscas?: {{perfil.relaciones}}</h4>
+	<h4>Creencia Religiosa: {{perfil.creenciaReligiosa}}</h4>
+	<h4>Intereses: {{perfil.intereses}}</h4>
+	<h4>Aficiones: {{perfil.aficiones}}</h4>
+	<h4>Descripcion: {{perfil.descripcion}}</h4>
+	<h4>Otra Info: {{perfil.otraInfo}}</h4>
+	<h4>Ciudad: {{perfil.ciudad}}</h4>
+	<img src="{{perfil.fotografia}}" ALT="Foto no disponible">
+
+<br>
+	{% if perfil.usuario != miperfil.usuario  %}
+<a href="/chat/{{perfil.id}}">Iniciar chat con {{perfil.alias}}.</a> <br>
+<a href="/upload/{{perfil.id}}">Enviar archivo a {{perfil.alias}}.</a><br>
+<a href="/comentarioPriv/crear/{{perfil.id}}">Enviar comentario privado a {{perfil.alias}}.</a>
+	{% endif %}
+<br>
+{% if perfil.permiteVotar == True %}
+
+<p>
+<h3>Votaciones:</h3><br><table class="tablavotaciones"><tr><th>Caracteristica</th><th></th><th>Media</th><th>Tu Votación</th></tr>
+	{% for caract in caracteristicas %}<tr valign="top"><td>{{caract.nombre}} </td><td>
+	
+
+	{% if perfil.usuario == miperfil.usuario  %}
+		No puedes Votar tu propio Perfil
+	{% else %}
+		{% if miperfil.permiteVotar == True %}	
+			{% for mivoto in votacion %}
+			{% if mivoto.tipoVotacion.id == caract.id %}
+				Va has realizado esta votación<br>
+			{% endif%}
+		{% endfor %}
+	<div class="ec-stars-wrapper">
+		<a href="/votar/{{perfil.id}}/{{caract.id}}/1" data-value="1" title="Votar con 1 estrellas">&#9733;</a>
+		<a href="/votar/{{perfil.id}}/{{caract.id}}/2" data-value="2" title="Votar con 2 estrellas">&#9733;</a>
+		<a href="/votar/{{perfil.id}}/{{caract.id}}/3" data-value="3" title="Votar con 3 estrellas">&#9733;</a>
+		<a href="/votar/{{perfil.id}}/{{caract.id}}/4" data-value="4" title="Votar con 4 estrellas">&#9733;</a>
+		<a href="/votar/{{perfil.id}}/{{caract.id}}/5" data-value="5" title="Votar con 5 estrellas">&#9733;</a>
+		<a href="/votar/{{perfil.id}}/{{caract.id}}/6" data-value="6" title="Votar con 6 estrellas">&#9733;</a>
+		<a href="/votar/{{perfil.id}}/{{caract.id}}/7" data-value="7" title="Votar con 7 estrellas">&#9733;</a>
+		<a href="/votar/{{perfil.id}}/{{caract.id}}/8" data-value="8" title="Votar con 8 estrellas">&#9733;</a>
+		<a href="/votar/{{perfil.id}}/{{caract.id}}/9" data-value="9" title="Votar con 9 estrellas">&#9733;</a>
+		<a href="/votar/{{perfil.id}}/{{caract.id}}/10" data-value="10" title="Votar con 10 estrellas">&#9733;</a>
+	</div>
+
+	<noscript>Necesitas tener habilitado javascript para poder votar</noscript>
+		{% else %}
+			Debes tener habilitada la opción de votar tu propio perfil para poder votar otros perfiles
+		{% endif %}
+	{% endif %}
+</td>
+	<td>
+
+	{% for valor in mediavotos %}
+		{% if valor.tipoVotacion.id == caract.id %}
+			<div class="visor">		
+				{% range valor.valorMedia as i %}
+				  &#9733;
+				{% endrange %}
+			</div>
+		{% endif%}
+	{% endfor %}</tdbody>
+
+	<td>
+
+	{% for mivoto2 in votacion %}
+		{% if mivoto2.tipoVotacion.id == caract.id %}
+			<div class="visor">		
+				{% range mivoto2.puntuacion as i %}
+				  &#9733;
+				{% endrange %}
+			</div>
+		{% endif%}
+	{% endfor %}</td></tr>
+	{% endfor %}
+</table></p>
+	{% else %}
+		<b>Este perfil no permite votar</b>
+	{% endif%}
+{% endblock %}

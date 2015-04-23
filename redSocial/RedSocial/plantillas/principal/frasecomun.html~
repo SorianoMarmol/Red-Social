@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block title %} Frases Comunes {% endblock %}
+
+{% block content %}
+
+		<p><a href="{% url "frasecomun_crear" %}">Nueva Frase Comun</a></p><br>
+		<b> Lista de frases comunes: </b><br><br>
+		{% for frasecomun in frasescomun %}
+
+
+				{% if user.is_staff %}
+					<a href='{% url 'frasecomun_detalle' frasecomun.id %}'>Frase con ID:{{ frasecomun.id }}: {{ frasecomun }} .</a> 
+					<a href='{% url 'frasecomun_editar' frasecomun.id %}'><b>Click para Editar</b></a>
+					<a href='{% url 'frasecomun_borrar' frasecomun.id %}'><b>Click para Borrar</b></a>
+					</br>
+				{% else %}
+
+		 			{% if user.username == frasecomun.autor.usuario.username %}
+						<a href='{% url 'frasecomun_detalle' frasecomun.id %}'> {{ frasecomun }} </a>
+						<a href='{% url 'frasecomun_editar' frasecomun.id %}'><b>Click para Editar</b></a>
+						<a href='{% url 'frasecomun_borrar' frasecomun.id %}'><b>Click para Borrar</b></a>
+						<br/>
+					{% endif %}
+				{% endif %}
+				
+		{% endfor %}
+
+{% endblock %}

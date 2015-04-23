@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+{% block titulo %} {{perfil.nombre}} {% endblock %}
+{% block encabezado %} 
+	<h1>{{perfil.nombre}}</h1>
+{% endblock %}
+{% block content %}
+
+{% block localscripts %}
+<script>
+OCULTO="none";
+VISIBLE="block";
+  function mostrar1(blo) {
+    document.getElementById(blo).style.display=VISIBLE;
+    document.getElementById('ver_off1').style.display=VISIBLE;
+    document.getElementById('ver_on1').style.display=OCULTO;
+    }
+  function ocultar1(blo) {
+    document.getElementById(blo).style.display=OCULTO;
+    document.getElementById('ver_off1').style.display=OCULTO;
+    document.getElementById('ver_on1').style.display=VISIBLE;
+    }
+
+</script>
+
+{% endblock %}
+	<h2>Perfil de: {{perfil.alias}}</h2>
+	{% if perfil.esActivo %}
+		<h4>Este perfil es verdadero</h4>
+	{% else %}
+		<h4>Este perfil es falso</h4>
+	{% endif %}
+	<h4>Edad: {{perfil.edad}}</h4>
+	<h4>Genero: {{perfil.genero}}</h4>
+	<h4>Orientación sexual: {{perfil.orientacionSexual}}</h4>
+	<h4>Profesion: {{perfil.profesion}}</h4>
+	<h4>Estudios: {{perfil.estudios}}</h4>
+	<h4>Estado civil: {{perfil.estadoCivil}}</h4>
+	<h4>¿Que buscas?: {{perfil.relaciones}}</h4>
+	<h4>Creencia Religiosa: {{perfil.creenciaReligiosa}}</h4>
+	<h4>Intereses: {{perfil.intereses}}</h4>
+	<h4>Aficiones: {{perfil.aficiones}}</h4>
+	<h4>Descripcion: {{perfil.descripcion}}</h4>
+	<h4>Otra Info: {{perfil.otraInfo}}</h4>
+	<img src="{{perfil.imagen}}" ALT="Foto no disponible">
+	<h4>Ciudad: {{perfil.ciudad}}</h4>
+
+<br>
+<a href="/chat/{{perfil.id}}">Iniciar chat con {{perfil.alias}}.</a> <br>
+<a href="/upload/{{perfil.id}}">Enviar archivo a {{perfil.alias}}.</a><br>
+<a href="/comentarioPriv/crear/{{perfil.id}}">Enviar comentario privado a {{perfil.alias}}.</a>
+
+<div id="ver_on1"><h1 id="titu"><a href="#" onclick="mostrar1('bloque1')" title="Expandir info">Votar usuario</a></h1>
+<p class="copete">Haga click en el t&iacute;tulo para seleccionar la caracteristica a votar de este usuario</p>
+</div>
+<div id="ver_off1" style="display: none"><h1><a href="#" onclick="ocultar1('bloque1')" title="Cerrar info">Contraer</a></h1>
+</div>
+<div id="bloque1" style="display: none">
+<p id="txt">  
+
+
+		{% for caract in caracteristicas %}
+		
+			<a href="/votar/{{perfil.id}}/{{caract.id}}/3">ID: {{ caract.id }}. Caracteristica: <b>{{ caract }}</b></a><br>
+
+		{% endfor %}
+</p>
+
+{% endblock %}

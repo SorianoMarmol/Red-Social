@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% block title %} Agenda {% endblock %}
+
+{% block content %}
+
+<style>
+
+
+h2,  {
+	font-size: 20pt;
+	color: red;
+	padding-top: 12px;
+	padding-bottom: 3px;
+}
+
+#a{
+
+	color: red;
+	font-size: 20pt;
+	color: red;
+	padding-top: 12px;
+	padding-bottom: 3px;
+}	
+
+}
+</style>
+
+
+		<h2><p><a href='{% url 'agenda_crear' %}' class='btn btn-primary btn-lg'>Nuevo Evento de Agenda</a></p></h2>
+
+
+<div class="container-fluid">
+   
+
+
+
+		{% for agenda in agendas %}
+
+ 			{% if user.username == agenda.autor.username %}
+ 		  <div class="row">
+
+ 		 <div class="col-xs-12 col-md-8">	
+
+ 				<h3>{{ agenda.titulo }}</h3><br>
+ 				<img src="{{ STATIC_URL }}images/avatar/agenda_img.png" width="120" height="110"alt="">
+				<a href='{% url 'agenda_detalle' agenda.id %}' class='btn btn-success btn-sm'>Ver Detalles</a>
+				<a href='{% url 'agenda_editar' agenda.id %}' class='btn btn-primary btn-sm'>Editar</a>
+				<a href='{% url 'agenda_borrar' agenda.id %}' class='btn btn-danger btn-sm'>Borrar</a>
+			</div>
+		</div>
+				<br>
+			{% endif %}
+		{% endfor %}
+
+</div>
+
+
+{% endblock %}

@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block title %} Agenda {% endblock %}
+
+{% block content %}
+
+		<p><a href="{% url "agenda_crear" %}">Nueva Entrada de Agenda</a></p>
+
+		{% for agenda in agendas %}
+ 			{% if user.username == agenda.autor.username %}
+				<a href='{% url 'agenda_detalle' agenda.id %}'>{{ agenda.titulo }} </a>
+				<a href='{% url 'agenda_editar' agenda.id %}'>editar</a>
+				<a href='{% url 'agenda_borrar' agenda.id %}'>borrar</a>
+				<br/>
+			{% endif %}
+		{% endfor %}
+
+{% endblock %}

@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title %} Crear Entrada de Agenda {% endblock %}
+{% block content %}
+
+{% block localscripts %}
+<body onload="obtener_localizacion();">
+<script language="javascript">
+function obtener_localizacion() {
+
+  navigator.geolocation.getCurrentPosition(coordenadas);
+}
+function coordenadas(position) {
+  var latitud = position.coords.latitude;
+  var longitud = position.coords.longitude;
+  alert('Tus coordenadas son: ('+latitud+','+longitud+')');
+
+  document.getElementById("id_coordy").value=longitud;
+  document.getElementById("id_coordx").value=latitud;
+
+}
+</script>
+
+{% endblock %}
+		<form action='' method='post'>{% csrf_token %}
+			{{ form.as_p}}
+		<input type='submit' value='Sumit' />
+		</form>
+{% endblock %}

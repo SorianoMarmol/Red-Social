@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+{% block title %} Nuevo Comentario {% endblock %}
+{% block content %}
+
+{% block localscripts %}
+<body onload="obtener_localizacion();">
+<script language="javascript">
+function obtener_localizacion() {
+
+  navigator.geolocation.getCurrentPosition(coordenadas);
+}
+function coordenadas(position) {
+  var latitud = position.coords.latitude;
+  var longitud = position.coords.longitude;
+  alert('Tus coordenadas son: ('+latitud+','+longitud+')');
+
+  document.getElementById("id_coordy").value=longitud;
+  document.getElementById("id_coordx").value=latitud;
+
+}
+</script>
+<script>
+OCULTO="none";
+VISIBLE="block";
+  function mostrar1(blo) {
+    document.getElementById(blo).style.display=VISIBLE;
+    document.getElementById('ver_off1').style.display=VISIBLE;
+    document.getElementById('ver_on1').style.display=OCULTO;
+    }
+  function ocultar1(blo) {
+    document.getElementById(blo).style.display=OCULTO;
+    document.getElementById('ver_off1').style.display=OCULTO;
+    document.getElementById('ver_on1').style.display=VISIBLE;
+    }
+
+</script>
+
+{% endblock %}
+<div id="ver_on1"><h1 id="titu"><a href="#" onclick="mostrar1('bloque1')" title="Expandir info">Mostrar frases comunes</a></h1>
+<p class="copete">Haga click en el t&iacute;tulo para axpandir la informaci&oacute;n</p>
+</div>
+<div id="ver_off1" style="display: none"><h1><a href="#" onclick="ocultar1('bloque1')" title="Cerrar info">Contraer</a></h1>
+</div>
+<div id="bloque1" style="display: none">
+<p id="txt">Texto oculto que ahora se ve :)</p>
+</div> 
+		<p><a href="{% url "frasecomun_crear" %}">Nueva Frase Comun</a></p><br>
+{% if user.is_staff %} 		
+	<b> Lista de todas las frases comunes de los usuarios: </b><br>
+{% else %}
+		<b> Lista de tus frases comunes: </b><br>
+{% endif %}
+		{% for frasecomun in frasescomun %}
+
+
+				{% if user.is_staff %}
+					<li><a href='{% url 'frasecomun_detalle' frasecomun.id %}'>Frase con ID:{{ frasecomun.id }}: {{ frasecomun }} .</a> </li>
+					<a href='{% url 'frasecomun_editar' frasecomun.id %}'><b>Click para Editar</b></a></li></ul>
+					<a href='{% url 'frasecomun_borrar' frasecomun.id %}'><b>Click para Borrar</b></a></li></ul>
+					</br>
+				{% else %}
+
+		 			{% if user.username == frasecomun.autor.usuario.username %}
+						<li><a href='{% url 'frasecomun_detalle' frasecomun.id %}'> {{ frasecomun }} </a></li>
+						<a href='{% url 'frasecomun_editar' frasecomun.id %}'><b>Click para Editar</b></a></li></ul>
+						<a href='{% url 'frasecomun_borrar' frasecomun.id %}'><b>Click para Borrar</b></a></li></ul>
+						<br/>
+					{% endif %}
+				{% endif %}
+				
+		{% endfor %}
+
+		<br><b> Lista de frases generales: </b><br>
+		{% for frasecomun in frasescomun %}
+
+
+			 			{% if user.username != frasecomun.autor.usuario.username  and frasecomun.esGeneral %}
+						<a> {{ frasecomun }} </a>
+						<br/>
+					{% endif %}
+ 
+				
+		{% endfor %}
+
+<br>
+
+
+
+		<form action='' method='post'>{% csrf_token %}
+			{{ form.as_p}}
+		<input type='submit' value='Sumit' />
+		</form>
+{% endblock %}

@@ -1,0 +1,111 @@
+{% extends 'djangoChat/base.html' %}
+
+
+
+{% block extrafooter2 %}
+
+
+    <title>Django Chat</title>
+    <link rel="stylesheet" type="text/css" href="/static/djangoChat/css/normalize.css" />
+    <link href="/static/djangoChat/css/main.css" rel="stylesheet" type="text/css"/>
+    <script data-main="/static/djangoChat/dist/scripts/main" type="text/javascript" src="/static/djangoChat/dist/scripts/vendor/requirejs/require.js"></script>
+
+{% endblock %}
+
+{% block nav2 %} 
+
+                                    <div class="well">  
+                                            
+                                                <h5>Usuarios Online</h5><br>
+                                            <div class="onlineUsers">
+                                        </div>
+                                    </div>
+{% endblock %}
+
+
+{% block contentChat %}
+
+<style>
+
+#container {
+    width:800px; /* I assume the width/height is fixed */
+    height:600px;
+    border: 1px solid black;
+    padding:4px; /* To remove the horiz scrollbar with width:100% and a border */
+}
+
+</style>
+        <!--END SIDEBAR MENU--><!--BEGIN PAGE WRAPPER-->
+        <div id="page-wrapper"><!--BEGIN PAGE HEADER & BREADCRUMB-->
+                            <div class="row">
+
+                                <div  class="col-md-12">
+                                    <div class="panel">
+                                        <div class="chatBox">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                                </div>
+
+
+
+
+<!--  input area  -->
+<section class="input-area">
+	  <img width="64" height="64" src="{{gravatar}}" alt="Texto"> 
+	<textarea class="input-box"></textarea>
+	<button class="submit">Enviar</button>
+	<p class="clear-both"></p>
+</section>
+
+{% endblock %}
+
+<!--
+
+	                                            <ol id="sample" class="ticker">
+                                                <li>Welcome to Odin - The Ultimate Responsive Admin Template</li>
+                                            </ol>
+
+
+
+                            <div class="row">
+                                <div class="col-md-6 col-xs-12">
+                                    <div class="panel">
+                                        <div class="panel-body"><h4 class="block-heading">Earning<span
+                                                class="pull-right">$<span id='earning-number'></span></span></h4>
+
+                                            <div id="earning-chart" style="width: 100%; height:100px"></div>
+                                        </div>
+                                    </div>
+                                    <div class="panel">
+                                        <div class="panel-body"><h4 class="block-heading">Traffic Sources</h4>
+
+                                            <div id="traffice-sources-chart" style="width: 100%; height:100px"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-xs-12">
+                                    <div class="panel">
+                                        <div class="panel-body"><h4 class="block-heading">New Customers<span
+                                                class="pull-right"><span id='new-customer-number'></span></span></h4>
+
+                                            <div id="new-customer-chart" style="width: 100%; height:100px"></div>
+                                        </div>
+                                    </div>
+                                    <div class="panel">
+                                        <div class="panel-body"><h4 class="block-heading">Internet Speed</h4>
+
+                                            <div id="internet-speed-chart" style="width: 100%; height:100px"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>                                            
+
+-->
+
+	
+
+				
+
+

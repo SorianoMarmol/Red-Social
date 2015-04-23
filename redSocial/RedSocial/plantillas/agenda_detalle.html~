@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% comment %} Ver Detalle de Agenda {% endcomment %}
+
+{% block content %}
+		<p><a href="{% url "agendas" %}">Menu de Agendas</a></p>
+
+		<h2>{{agenda.titulo}} {{agenda.id}}</h2>
+		<p><b>Fecha:</b> {{agenda.fecha|date:"D, d/m/y"}}</p>
+		<p>
+			{% if agenda.descripcion %}
+				{{agenda.descripcion}}
+			{% else %}
+				No se ha incluido texto
+			{% endif %}
+		<p></p>
+		</p>
+{% endblock %}
+
+ 

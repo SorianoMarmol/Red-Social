@@ -1,0 +1,141 @@
+{% extends 'base.html' %}
+
+{% block content %}
+ <b> Haga click sobre un usuario dentro de su radio de alcance para ver su perfil o interactuar con él </b> <br><br>
+<!DOCTYPE html />
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" charset=utf-8" />
+<title>Easytour - Ubicaciones</title>
+<link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700|Archivo+Narrow:400,700" rel="stylesheet" type="text/css">
+<link href="{{STATIC_URL}}css/default.css" rel="stylesheet" type="text/css" media="all" />
+<script type="text/javascript" src="http://maps.google.com/maps/api/js?key=AIzaSyCOOI3vQIz9I0deeItGyDGTWw8OPe_CY0E&sensor=false"></script>
+    <script type="text/javascript">
+    	var probando
+	function initialize() 
+	{
+
+    if (navigator.geolocation) {
+         navigator.geolocation.getCurrentPosition(drawMap);
+    } else {
+          x.innerHTML="La Geolocalizacion no esta soportada en este navegador.";
+    }
+
+    function drawMap(position){
+	var myLatLng = new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
+    var mapOptions = {
+	    zoom: 15,
+	    center: myLatLng,
+	    mapTypeId: google.maps.MapTypeId.ROADMAP
+    };
+
+    map = new google.maps.Map(document.getElementById('map_canvas'), mapOptions);
+    
+    var circuloPersona = new google.maps.Circle({
+	    center:myLatLng,
+	    radius:1300,
+	    strokeColor:"#0000FF",
+	    strokeOpacity:0.8,
+	    strokeWeight:2,
+	    fillColor:"#0000FF",
+	    fillOpacity:0.4
+
+     });
+
+
+
+    var marker = new google.maps.Marker({
+		    position: myLatLng,
+		    draggable: false,  
+		    map: map,
+		    title:"Tu posición",
+
+		    });
+		    //alert('TUS CORDS: ('+myLatLng+')');
+
+   	circuloPersona.setMap(map);
+     	circuloPersona.bindTo('marker', marker, 'Tu posición');
+
+	//map.fitBounds(circuloPersona.getBounds());
+     	//bounds = circuloPersona.getBounds();
+
+
+
+	{% for perfil in cercanos %}
+			{% if perfil.usuario.conectado == True   %}
+			{% if perfil.esActivo  %}
+				{% if perfil.usuario.username != user.username   %}
+					{% if perfil.esActivo  %}
+					    var lat = "{{perfil.usuario.coordx|stringformat:"f"}}";
+					    var lng = "{{perfil.usuario.coordy|stringformat:"f"}}";
+
+					    var myLatLng = new google.maps.LatLng(lat,lng);
+					    //alert('Coordenadas detectadas: ('+myLatLng+')');
+
+					    var marker2 = new google.maps.Marker({
+					    position: myLatLng,
+					    animation:google.maps.Animation.BOUNCE,
+					    map: map,
+					    title:"Posición del perfil: {{perfil.alias}}"
+					    });
+					{% if perfil.esVerdadero == False  %}
+  						var contentString = '<p>Perfil de: <a href="/perfiles/verPerfil/{{perfil.id}}"> {{perfil.alias}}</a> '+' <IMG SRC="http://escalerilla.barruelo.com/pics/punto_rojo.gif" ALT="perfil falso" title="Perfil falso" ></p>'+'<p><b><a href="/chat/{{perfil.id}}">Iniciar chat.</p> '+ '</p></a><b> <b><a href="/upload/{{perfil.id}}">Enviar archivo</a><b></p>' + '<a href="/comentarioPriv/crear/{{perfil.id}}">Enviar comentario privado.</a>';
+					{% else %}
+  						var contentString = '<p>Perfil de: <a href="/perfiles/verPerfil/{{perfil.id}}"> {{perfil.alias}}</a> '+' <IMG SRC="http://content.delta.com/content/www/en_US/mobile/_jcr_content/mainPar/table/row-2-col-2/cellContent.img.20140401T204656437Z.png" ALT="perfil verdadero" title="Perfil verdadero"></p>'+'<p><b><a href="/chat/{{perfil.id}}">Iniciar chat.</p> '+ '</p></a><b> <b><a href="/upload/{{perfil.id}}">Enviar archivo</a><b></p>'+ '<a href="/comentarioPriv/crear/{{perfil.id}}">Enviar comentario privado.</a>';	
+					{% endif %}			
+					  var infowindow = new google.maps.InfoWindow({
+					      content: contentString
+					  });
+
+
+
+						//alert( circuloPersona.getBounds().contains( marker2.getPosition() ) );
+						if (circuloPersona.getBounds().contains(marker2.getPosition())){
+							//alert( circuloPersona.getBounds().contains( marker2.getPosition() ) );
+					  google.maps.event.addListener(marker2, 'click', function() {
+					    infowindow.open(map,marker2);
+					  });
+
+							     
+ 						}
+					{% endif %}
+			{% endif %}{% endif %}
+			{% endif %}
+
+	{% endfor %}
+
+}
+	}
+	
+
+	</script>
+
+<body onLoad="initialize()">
+<div id="map_canvas" style="width:100%; height:400px"></div>
+</body>
+</html>
+<br>
+
+ 
+
+<b> Usuarios Online cercanos: </b><br> <br>
+			{% for perfil in cercanos %}
+
+				{% if perfil.usuario.conectado == True   %}
+					{% if perfil.esActivo  %}
+						{% if perfil.usuario.username != user.username   %}
+							<a href="/perfiles/verPerfil/{{perfil.id}}">Perfil: {{perfil.alias}})</a>		    	
+							<b><a href="/chat/{{perfil.id}}">Iniciar chat. </a><b> <b><a href="/upload/{{perfil.id}}">Enviar archivo</a><b>
+							<br>
+						{% endif %}
+					{% endif %}
+
+
+				{% endif %}
+				{% empty %}
+					<b> no hay usuarios cercanos online actualmente </b>
+
+
+<br><br>
+			{% endfor %}
+{% endblock %}

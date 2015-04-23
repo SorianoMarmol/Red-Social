@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<form id="seleccionarp" method="post" enctype="multipart/form-data" action="/perfiles/seleccionarp">{% csrf_token %}
+<table border=0>
+<tr>
+
+	{% if user.is_authenticated %}
+		<td>Perfil Verdadero:</td><td>{% if v == 0 %}
+		
+
+
+			<a href="/perfiles/nuevop/1">Nuevo Perfil Verdadero</a></td><td></td>
+		{% else %}
+
+			<a href="/perfiles/editp/1/{{pVerdadero.id}}">{{pVerdadero.alias}}</a>
+		
+		</td><td><input type="radio" name="group1" value="1" {% if pVerdadero.esActivo == True %} checked {% endif %}>Seleccionar</td>
+		{% endif %}
+
+</tr><tr>
+		<td>Perfil Falso:</td><td> {% if f == 0 %}
+			
+
+			<a href="/perfiles/nuevop/0">Nuevo Perfil Falso</a></td><td></td>
+		{% else %}
+			<a href="/perfiles/editp/0/{{pFalso.id}}">{{pFalso.alias}}</a>
+		
+		</td><td><input type="radio" name="group1" value="2" {% if pFalso.esActivo == True %} checked {% endif %}>Seleccionar</td>
+		{% endif %}
+			<!--<a href="/users/verusuario/{{user2.id}}"></a>-->		    	
+	<!--<a href="/users/delete/{{user2.id}}">Borrar usuario</a>-->
+	
+
+	{% endif %}
+</tr>
+</table>
+
+{% if f != 0 %}
+
+	<input type="submit" value="Guardar Selección de perfil"></form>
+{% endif %}
+
+	{% if user.is_authenticated %}
+		<br><td>¿Desea borrar su cuenta:? 	<a href="/users/delete/{{user.id}}">Borrar cuenta</a></td><td>
+	{% endif %}
+
+{% endblock %}

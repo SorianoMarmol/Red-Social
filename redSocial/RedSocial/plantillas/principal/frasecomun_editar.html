@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+ 
+{% block content %}
+<p><a href="/frasescomun" class='btn btn-info btn-lg'>Volver al listado de Frases Comunes</a></p><br>
+<h3>Editar una Frase Comun</h3><br><br>
+		<form action='' method='post'>{% csrf_token %}
+			{{ form.as_p}}
+		<br>
+		<input type='submit' class="btn btn-success"><value='Aceptar' />
+		</form>
+
+
+{% endblock %}

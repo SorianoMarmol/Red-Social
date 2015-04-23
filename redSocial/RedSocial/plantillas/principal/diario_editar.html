@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block content %}
+{% block localscripts %}
+<body onload="obtener_localizacion();">
+<script language="javascript">
+function obtener_localizacion() {
+
+  navigator.geolocation.getCurrentPosition(coordenadas);
+}
+function coordenadas(position) {
+  var latitud = position.coords.latitude;
+  var longitud = position.coords.longitude;
+  //alert('Tus coordenadas son: ('+latitud+','+longitud+')');
+
+  document.getElementById("id_coordy").value=longitud;
+  document.getElementById("id_coordx").value=latitud;
+
+}
+</script>
+
+{% endblock %}
+<em><h2> Editar entrada de diario </h2></em><br>
+		<form action='' method='post' enctype='multipart/form-data'>{% csrf_token %}
+			<table class='formTable'>{{form}}</table><br>
+		<input type='submit' value='Aceptar' />
+		</form>
+{% endblock %}

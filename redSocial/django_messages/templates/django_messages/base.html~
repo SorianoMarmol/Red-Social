@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load url from future %} 
+{% block bodyclass %}about{% endblock %}
+{% block nav %}
+
+	{% if not user.is_authenticated %}
+	   <li class="active"><a href="/users/new">Nuevo Usuario</a></li>
+           <li><a href="/users/login">Login</a></li>
+	{% endif %}
+
+	{% if user.is_authenticated %}
+          <li><a href="/users/logout">Logout</a></li>
+
+	<li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Mis cosas<b class="caret"></b></a>
+              <ul class="dropdown-menu">
+
+		        <b><li><a href='/diarios'>  Ver mi Diario</a></li></b>
+		        <li><a href='/diarios/crear'>Nueva Entrada de diario</a></li>
+            		<b><li><a href='/agendas'>  Ver mi Agenda</a></li></b>
+		        <li><a href='/agendas/crear'>Nueva Entrada de agenda</a></li>
+		        <b><li><a href='/frasescomun'>Ver mis frases comunes</a></li></b>
+		        <li><a href='/frasescomun/crear'>Nueva frase</a></li>
+              </ul>
+            </li>
+	<li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Mis perfiles<b class="caret"></b></a>
+              <ul class="dropdown-menu">
+
+		        <b><li><a href='/diarios'>  Ver mis perfiles</a></li></b>
+		        <li><a href='/diarios/crear'>Seleccionar perfil activo</a></li>
+            		<b><li><a href='/agendas'>  Nuevo perfil</a></li></b>
+		        <li><a href='/agendas/crear'>Editar perfil</a></li>
+              </ul>
+            </li>
+	<li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Expresate<b class="caret"></b></a>
+              <ul class="dropdown-menu">
+
+		        <li><a href='/pensamiento/crear'>  Nuevo Pensamiento</a></li></b>
+            		<li><a href='/comentario/crear'>  Nuevo comentario</a></li></b>
+              </ul>
+            </li>
+
+
+	<li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Mensajes<b class="caret"></b></a>
+              <ul class="dropdown-menu">
+
+	    <li><a href="{% url 'messages_inbox' %} ">&raquo;&nbsp;{% trans "Inbox" %}</a></li>
+	    <li><a href="{% url 'messages_outbox' %} ">&raquo;&nbsp;{% trans "Sent Messages" %}</a></li>
+	    <li><a href="{% url 'messages_compose' %} ">&raquo;&nbsp;{% trans "New Message" %}</a></li>
+	    <li><a href="{% url 'messages_trash' %} ">&raquo;&nbsp;{% trans "Trash" %}</a></li>
+              </ul>
+            </li>
+          <li><a href="/timeline">Pensamientos y Servicios</a></li>
+          <li><a href="/comentarios">Ver Comentarios</a></li>
+
+          <li><a href="/diarios">Ver Cercanos</a></li>
+
+	{% endif %}
+	{% if user.is_staff %}
+	<li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Administración <b class="caret"></b></a>
+              <ul class="dropdown-menu">
+
+		        <li><a href='/admin'>Acceso Panel</a></li>
+		        <li><a href='/admin/doc'>Ayuda django</a></li>
+            		<li><a href='/users/list'>Lista Usuarios</a></li>
+            		<li><a href='/...'>...</a></li>	 
+
+              </ul>
+            </li>
+	{% endif %}
+
+
+{% endblock %}
+
+{% block content %}  
+{% endblock %}
+{% block extrafooter %}
+
+{% endblock %}
+
+

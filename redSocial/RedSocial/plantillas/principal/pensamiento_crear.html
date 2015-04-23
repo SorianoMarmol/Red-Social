@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %} Nuevo Pensamiento {% endblock %}
+{% block content %}
+
+{% block localscripts %}
+<body onload="obtener_localizacion();">
+<script language="javascript">
+function obtener_localizacion() {
+
+  navigator.geolocation.getCurrentPosition(coordenadas);
+}
+function coordenadas(position) {
+  var latitud = position.coords.latitude;
+  var longitud = position.coords.longitude;
+  //alert('Tus coordenadas son: ('+latitud+','+longitud+')');
+
+  document.getElementById("id_coordy").value=longitud;
+  document.getElementById("id_coordx").value=latitud;
+
+}
+</script>
+
+{% endblock %}
+
+<h3><span class="label label-default">Nuevo Pensamiento</span></h3><br><br>
+
+
+		<form action='' method='post'>{% csrf_token %}
+			<table class='formTable'>{{form}}</table>
+		<input type='submit' class="btn btn-success"><value='Aceptar'/>
+		</form>
+{% endblock %}

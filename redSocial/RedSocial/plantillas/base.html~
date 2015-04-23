@@ -1,0 +1,120 @@
+{% extends 'bootstrap_theme/marketing_narrow.html' %}
+
+#STATICFILES_DIRS = (     os.path.join(RUTA_PROYECTO,'bootstrap_theme/static'),
+#marketing narrow (poner %)
+
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+	<meta charset='utf-8'>
+	<title>Prueba Titulo</title>
+
+
+{% block branding %}Háblame{% endblock %} #nombre proyecto
+{% block localscripts %}{% endblock %}
+
+{% block nav %}
+
+	{% if not user.is_authenticated %}
+	   <li class="active"><a href="/users/new">Nuevo Usuario</a></li>
+           <li><a href="/users/login">Login</a></li>
+           <li><a href="/pass/recover/">Recuperar Contraseña</a></li>
+
+http://127.0.0.1:8000/pass/recover/
+	{% endif %}
+
+	{% if user.is_authenticated %}
+          <li><a href="/users/logout">Logout</a></li>
+
+	<li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Mis cosas<b class="caret"></b></a>
+              <ul class="dropdown-menu">
+
+		        <b><li><a href='/diarios'>  Ver mi Diario</a></li></b>
+		        <li><a href='/diarios/crear'>Nueva Entrada de diario</a></li>
+            		<b><li><a href='/agendas'>  Ver mi Agenda</a></li></b>
+		        <li><a href='/agendas/crear'>Nueva Entrada de agenda</a></li>
+		        <b><li><a href='/frasescomun'>Ver mis frases comunes</a></li></b>
+		        <li><a href='/frasescomun/crear'>Nueva frase</a></li>
+		        <b><li><a href='/archivos'>Ver mis archivos</a></li></b>
+		        <b><li><a href='/historial'>Ver mis chats</a></li></b>
+ 			<li><b><li><a href="/users/delete/{{user.id}}">Borrar cuenta</a></td><td></li></b></li>
+
+              </ul>
+            </li>
+
+	<li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Expresate<b class="caret"></b></a>
+              <ul class="dropdown-menu">
+
+		        <li><a href='/pensamiento/crear'>  Nuevo Pensamiento</a></li></b>
+            		<li><a href='/comentario/crear'>  Nuevo comentario</a></li></b>
+              </ul>
+            </li>
+
+          <li><a href="/perfiles/misperfiles">Mis perfiles</a>
+          <li><a href="/mensajes">Mensajes</a></li>
+          <li><a href="/timeline">Pensamientos y Servicios</a></li>
+          <li><a href="/comentarios">Ver Comentarios</a></li>
+
+          <li><a href="/cercanos">Ver Cercanos</a></li>
+
+	{% endif %}
+	{% if user.is_staff %}
+	<li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Administración <b class="caret"></b></a>
+              <ul class="dropdown-menu">
+
+		        <li><a href='/admin'>Acceso Panel</a></li>
+		        <li><a href='/admin/doc'>Ayuda django</a></li>
+            		<li><a href='/users/list'>Gestión Usuarios</a></li>
+            		<li><a href='/frasescomun'>Gestión Frases</a></li>
+            		<li><a href='/caracteristicas'>Gestión Caracteristicas</a></li>		 
+
+              </ul>
+            </li>
+	{% endif %}
+
+
+{% endblock %}
+
+</head>
+
+<body>
+<div id="container">
+	<div id="header">
+		<h2>{% block title %}Titulo{% endblock %}</h2>
+		{% if user.is_authenticated %}
+		   	 <h3>{{user.first_name}} {{user.last_name}} ({{user.username}}) conectado</h3>
+		{% endif %}
+	</div>
+
+
+		</ul>
+
+
+		</div>
+		<div id="content">
+
+			{% block content %}
+
+
+				<h2></h2>		
+
+	
+			{% endblock %}
+
+
+
+
+		</div>
+		<div id="footer">
+			        {% block footer %}<p>&copy; Ingenieria Web</p>{% endblock %}
+
+		</div>
+	</div>
+</div>
+</body>
+</html>
+

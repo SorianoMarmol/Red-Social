@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% comment %} User input form {% endcomment %}
+
+
+{% block content %}
+	<em><h2>Editar usuario:</h2></em><br><br>
+
+	<form id='form' method='post' enctype='multipart/form-data' action=''>{% csrf_token %}
+	    <table class='formTable'>{{form}}</table><br>
+		<p><input type='submit' value='Aceptar'></p>
+	</form>
+{% endblock %}

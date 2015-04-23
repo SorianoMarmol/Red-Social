@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+En este apartado puedes ver los chats almacenados con el perfil que usted tiene seleccionado actualmente y acceder al chat en cuestión con su respectivo historial: <br> <br>
+
+			{% for comentario in comentarios %}
+
+
+				{% ifchanged %}
+ 
+ 						
+							{% if comentario.perfilOrigen.usuario.username != request.user.username  %} 
+								{% ifnotequal comentario.perfilOrigen.usuario.username comentario.perfilDestino.usuario.username %}<b><a href="/chat/{{comentario.perfilOrigen.id}}">{{ comentario.perfilOrigen }}</a><b><br> {% endifnotequal%}
+							{% endif %}
+ 					 
+							{% if comentario.perfilDestino.usuario.username != request.user.username %} 
+								{% ifnotequal comentario.perfilOrigen.usuario.username comentario.perfilDestino.usuario.username %}<b><a href="/chat/{{comentario.perfilDestino.id}}">{{ comentario.perfilDestino }}</a><b><br>{% endifnotequal %}
+							{% endif %}
+
+
+				 
+				{% endifchanged %}
+
+
+
+ 
+				{% empty %}
+					<b> No hay chats almacenados actualmente con el perfil actualmente seleccionado </b>
+
+
+<br><br>
+			{% endfor %}
+ 
+ 
+ {% endblock %}
+
+

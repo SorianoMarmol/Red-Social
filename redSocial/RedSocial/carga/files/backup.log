@@ -1,0 +1,5 @@
+#1385942933 Disk /dev/sdb - 7803 MB / 7441 MiB - CHS 1019 241 62
+ 1 : start=     8064, size= 15232512, Id=0C, *
+#1385943007 Disk /dev/sdb - 7803 MB / 7441 MiB - CHS 1020 241 62
+ 1 : start=     8060, size= 15232780, Id=05, E
+ 5 : start=     8064, size= 15232776, Id=0B, L

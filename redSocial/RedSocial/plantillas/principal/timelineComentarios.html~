@@ -1,0 +1,162 @@
+{% extends "base.html" %}
+
+{% block title %} Timeline: Comentarios {% endblock %}
+
+{% block content %}
+<style>
+.bubble {
+    margin: 50px;
+    padding: 20px;
+    position: relative;
+    border-radius: 8px 8px 8px 8px;
+    width: 700px;
+}
+.bubble:after {
+    content: "";
+    position: absolute;
+   top: 100%;
+   left: 20px;
+   border-top: 20px solid blue;
+   border-top-color: inherit;
+   border-left: 20px solid transparent;
+   border-right: 20px solid transparent;
+}
+</style>
+		<p><a href="{% url "comentario_crear" %}">Nuevo Comentario</a></p><br><br>
+
+<b>Lista de comentarios públicos:</b> <br>
+
+		{% for coment in comentario %}
+		{% if coment.esPrivado == False %}
+				{% if coment.esChat == False %}
+					{% if coment.estaOculto == False %}<div class="bubble" style="background: lightblue; border-color: Cyan;"> 
+				<TABLE BORDER=1 WIDTH=500 >
+					<tr>
+
+						<td>Autor: </td>
+						{% if coment.esAnonima == True %}
+								<td> Comentario Anónimo </td>
+						{% else %}
+								<td> {{coment.perfilOrigen}} </td>
+						{% endif %}
+
+					</tr>
+					<tr>
+						<td WIDTH=100 >Publicación: </td>
+						<td>{{coment.texto}}</td>
+					</tr>
+					<tr>
+						<td>Fecha: </td>
+						<td>{{coment.fecha}}</td>
+					</tr></div>
+					{% else %}						{% if coment.estaOculto == True and user.username ==  coment.perfilOrigen.usuario.username %}<div class="bubble" style="background: lightblue; border-color: Cyan;"> 
+				<TABLE BORDER=1 WIDTH=500 >				
+					<tr>
+
+						<td>Autor: </td>
+						{% if coment.esAnonima == True %}
+								<td> Comentario Anónimo </td>
+						{% else %}
+								<td> {{coment.perfilOrigen}} </td>
+						{% endif %}
+
+					</tr>
+					<tr>
+						<td WIDTH=100 >Publicación: </td>
+						<td>{{coment.texto}}</td>
+					</tr>
+					<tr>
+						<td>Fecha: </td>
+						<td>{{coment.fecha}}</td>
+					</tr>
+
+						<tr>
+							<td>Está oculto: </td>
+							<td>Este comentario es invisible</td>
+						</tr></div></TABLE>
+					{% endif %}{% endif %}
+					<br>
+
+				</TABLE></div>
+
+					{% if user.username ==  coment.perfilOrigen.usuario.username %}
+							<p><a href='{% url 'comentario_borrar' coment.id %}'> Borrar Comentario</a></p>
+						{% if coment.estaOculto %}
+							<p><a href='{% url 'comentario_mostrar' coment.id %}'> Mostrar Comentario</a></p>					
+						{% else %}
+							<p><a href='{% url 'comentario_ocultar' coment.id %}'> Ocultar Comentario</a></p>
+					{% endif %}{% endif %}
+
+
+		{% endif %}		
+		{% endif %}
+		{% endfor %}
+
+<br><b>Lista de tus comentarios privados recibidos y enviados:</b> <br>
+<i> Nota: tenga en cuenta que solo se muestran los comentarios relacionados con su perfil actualmente activo </i> <br>
+
+		{% for coment in comentario %}
+		{% if coment.esPrivado %} 
+	        {% if user.username == coment.perfilDestino.usuario.username and coment.perfilDestino.esActivo == True  or user.username == coment.perfilOrigen.usuario.username and coment.perfilOrigen.esActivo == True  %}
+
+				{% if coment.esChat == False %}<div class="bubble" style="background: brown; border-color: brown;"> 
+				<TABLE BORDER=1 WIDTH=500  style="color: #FFFFFF">
+
+						{% if user.username ==  coment.perfilOrigen.usuario.username %}
+							<b style="color: #FFFFFF"> Este comentario es tuyo. El destinatario es "{{coment.perfilDestino}}" </b>
+						{% endif %}
+					<tr>
+						<td>Autor: </td>
+
+						{%  if coment.esAnonima == True %}
+								<td> Comentario Anónimo </td>
+						{% else %}
+								<td> {{coment.perfilOrigen}} </td>
+						{% endif %}
+
+					</tr>
+					<tr>
+						<td WIDTH=100 >Publicación: </td>
+						<td>{{coment.texto}}</td>
+					</tr>
+					<tr>
+						<td>Fecha: </td>
+						<td>{{coment.fecha}}</td>
+					</tr>
+					<tr>
+						<td>¿Leido?: </td>
+
+							{%  if coment.estaLeido %}
+									<td> Si </td>
+							{% else %}
+									<td> No </td>
+							{% endif %}
+
+					</tr>
+					<br>
+
+				</TABLE></div>
+
+					{% if user.username ==  coment.perfilOrigen.usuario.username %}
+							<p><a href='{% url 'comentario_borrar' coment.id %}'> Borrar Comentario</a></p>
+
+					{% endif %}
+
+		{% endif %}		
+		{% endif %}		
+		{% endif %}
+		{% empty %}
+			<br> Aún no ha recibido comentarios privados </br>
+		{% endfor %}
+
+{% endblock %}
+
+						{% if user.username ==  coment.perfilDestino.usuario.username %}
+							<td> Si </td>
+						{% else %}
+							{%  if coment.estaLeido %}
+									<td> Si </td>
+							{% else %}
+									<td> No </td>
+							{% endif %}
+						{% endif %}

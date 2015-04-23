@@ -1,0 +1,99 @@
+{% extends "base.html" %}
+{% block title %} Nuevo Comentario {% endblock %}
+{% block content %}
+
+{% block localscripts %}
+<body onload="obtener_localizacion();">
+<script language="javascript">
+function obtener_localizacion() {
+
+  navigator.geolocation.getCurrentPosition(coordenadas);
+}
+function coordenadas(position) {
+  var latitud = position.coords.latitude;
+  var longitud = position.coords.longitude;
+  //alert('Tus coordenadas son: ('+latitud+','+longitud+')');
+
+  document.getElementById("id_coordy").value=longitud;
+  document.getElementById("id_coordx").value=latitud;
+
+}
+</script>
+<script>
+OCULTO="none";
+VISIBLE="block";
+  function mostrar1(blo) {
+    document.getElementById(blo).style.display=VISIBLE;
+    document.getElementById('ver_off1').style.display=VISIBLE;
+    document.getElementById('ver_on1').style.display=OCULTO;
+    }
+  function ocultar1(blo) {
+    document.getElementById(blo).style.display=OCULTO;
+    document.getElementById('ver_off1').style.display=OCULTO;
+    document.getElementById('ver_on1').style.display=VISIBLE;
+    }
+
+</script>
+
+{% endblock %}
+<div id="ver_on1"><h1 id="titu"><a href="#" onclick="mostrar1('bloque1')" title="Expandir info" class='btn btn-info btn-lg'>Mostrar frases comunes</a></h1>
+<p class="copete"><em>Haga click en el t&iacute;tulo para expandir la informaci&oacute;n</em></p><br>
+</div>
+<div id="ver_off1" style="display: none"><h1><a href="#" onclick="ocultar1('bloque1')" title="Cerrar info"class='btn btn-warning btn-lg'>Contraer</a></h1>
+</div>
+<div id="bloque1" style="display: none">
+<p id="txt">  
+
+{% if user.is_staff %} 		
+	<b> Lista de todas las frases comunes de los usuarios: </b><br>
+{% else %}
+		<br><br><b> Lista de tus frases comunes: </b><br><br>
+{% endif %}
+		{% for frasecomun in frasescomun %}
+
+
+				{% if user.is_staff %}
+					<li><a href='{% url 'frasecomun_detalle' frasecomun.id %}'>Frase con ID:{{ frasecomun.id }}: {{ frasecomun }} .</a>
+<input type="Button" name="boton" value="Usar" onclick="document.getElementById('id_texto').value='{{ frasecomun }}';"> </li>
+					<a href='{% url 'frasecomun_editar' frasecomun.id %}'><b>Click para Editar</b></a></li></ul>
+					<a href='{% url 'frasecomun_borrar' frasecomun.id %}'><b>Click para Borrar</b></a></li></ul>
+					</br>
+				{% else %}
+
+
+		 			{% if user.username == frasecomun.autor.usuario.username %}
+		 	
+			<div class="well well-sm"><a href='{% url 'frasecomun_detalle' frasecomun.id %}'> {{ frasecomun }} </a><input type="Button" name="boton" value="Usar" onclick="document.getElementById('id_texto').value='{{ frasecomun }}';"></div>		 			
+						<a href='{% url 'frasecomun_editar' frasecomun.id %}' class='btn btn-primary btn-sm'>Editar</a>
+						<a href='{% url 'frasecomun_borrar' frasecomun.id %}' class='btn btn-danger btn-sm'>Borrar</a>
+						<br><br><br><br>
+					{% endif %}
+				{% endif %}
+				
+		{% endfor %}
+
+		<p><a href="{% url "frasecomun_crear" %}" class='btn btn-info btn-lg'>Nueva Frase Común</a></p><br>
+
+		<br><b> Lista de frases generales: </b><br><br><br>
+		{% for frasecomun in frasescomun %}
+
+				 			
+
+			 			{% if user.username != frasecomun.autor.usuario.username  and frasecomun.esGeneral %}
+							<div class="well well-sm">{{ frasecomun }} </a><input type="Button" name="boton" value="Usar" onclick="document.getElementById('id_texto').value='{{ frasecomun }}';"></div><br/>
+					{% endif %}
+ 
+				
+		{% endfor %}
+
+<br>
+</p>
+</div> 
+
+
+		<form action='' method='post'>{% csrf_token %}
+			{{ form.as_p}}
+		<br><br><input type='submit' class="btn btn-success"><value='Aceptar'/>
+		</form>
+{% endblock %}
+{% block footer %}{% endblock %}

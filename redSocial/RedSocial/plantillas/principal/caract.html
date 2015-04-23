@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block title %} Listado de caracteristicas a votar {% endblock %}
+
+{% block content %}
+
+		<p><a href="/caracteristicas/crear" class='btn btn-info btn-lg'>Nueva caracteristica a votar</a></p><br>
+
+<em>Listado de caracteristicas a votar. Haga click en la caracteristica deseada para editarla </em><br> <br>
+
+		{% for caract in comentario %}
+		
+			<div class="well well-sm"><a href="/caracteristicas/editar/{{caract.id}}">ID: {{ caract.id }}. Caracteristica: <b>{{ caract }}</b></a>. ¿Borrar? : <a href="/caracteristicas/borrar/{{caract.id}}">Si <br></a></div>
+
+		{% endfor %}
+
+{% endblock %}

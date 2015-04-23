@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block content %}
+		{% if user.is_authenticated %}
+			{% if user.is_staff and user.is_superuser and not user2.is_superuser %}
+			{% for user2 in userList %}
+		<div class="well well-sm"><a href="/users/verusuario/{{user2.id}}">{{user2.first_name}} {{user2.last_name}} ({{user2.username}})</a>		    	
+		<a href="/users/delete/{{user2.id}}" class='fa fa-trash-o fa-fw'></a></div>
+			<br>
+		{% endfor %}
+	    	{% endif %}
+	{% endif %}
+	<br>
+	{% if userList.has_previous %}
+		<a href="?page={{ userList.previous_page_number }}"> Anterior </a>
+	{% endif %}
+		<span> Página {{ userList.number }} de {{ userList.paginator.num_pages }}.
+	</span>
+	{% if userList.has_next %}
+		<a href="?page={{ userList.next_page_number }}">Siguiente </a>
+	{% endif %}
+
+	
+{% endblock %}
+
+{% block aside %}
+	{% if user.is_authenticated %}
+		<form action="/users/new"><input type="submit" value="Nuevo usuario"></form>
+	{% endif %}
+{% endblock %}

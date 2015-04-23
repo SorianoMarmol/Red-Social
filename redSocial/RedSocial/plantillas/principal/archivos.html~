@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block title %} Lista de archivos {% endblock %}
+
+{% block content %}
+
+<b>Lista de archivos enviados: </b> <br><br>
+
+		{% for file in archivo %}
+ 			{% if user.username == file.perfilOrigen.usuario.username %}
+				
+				Nombre: {{ file }}; Enviado a {{ file.perfilDestino }} en la fecha {{ file.fecha }}. <a href="/download/{{file.id}}">Click para descargar</a><br> <br>
+
+			{% endif %}
+	 	{% endfor %}
+
+<br><b>Lista de archivos recibidos: </b> <br><br>
+
+		{% for file in archivo %}
+ 			{% if user.username == file.perfilDestino.usuario.username %}
+				
+				Nombre: {{ file }}; Enviado por {{ file.perfilDestino }} en la fecha {{ file.fecha }}. <a href="/download/{{file.id}}">Click para descargar</a><br> <br>
+
+
+			{% endif %}
+	 	{% endfor %}
+
+
+{% endblock %}

@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="es">
+<!--Loading bootstrap css-->
+    <link type="text/css" href="http://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,800italic,400,700,800">
+    <link type="text/css" rel="stylesheet" href="http://fonts.googleapis.com/css?family=Oswald:400,700,300">
+    <link rel="shortcut icon" href="http://www.next-themes.com/mango/code/images/favicon.ico">
+    <head>
+        <meta charset="utf-8">
+        <title>{% block titulo %}Social Network{% endblock %}</title>
+
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+        <link href="{{STATIC_URL}}css/votaciones.css" rel="stylesheet">
+
+
+        <link href="{{ STATIC_URL }}vendors/jquery-ui-1.10.3.custom/css/ui-lightness/jquery-ui-1.10.3.custom.css" rel="stylesheet"> 
+        <link href="{{ STATIC_URL }}vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">    
+        <link href="{{ STATIC_URL }}vendors/bootstrap/css/bootstrap.min.css" rel="stylesheet">  
+        <link href="{{ STATIC_URL }}vendors/jquery-news-ticker/jquery.news-ticker.css" rel="stylesheet">    
+        <link href="{{ STATIC_URL }}vendors/jquery-jvectormap/jquery-jvectormap-1.2.2.css" rel="stylesheet">    
+        <link href="{{ STATIC_URL }}vendors/animate.css/animate.css" rel="stylesheet">  
+        <link href="{{ STATIC_URL }}vendors/jquery-pace/pace.css" rel="stylesheet"> 
+        <link href="{{ STATIC_URL }}css/style.css" rel="stylesheet">    
+        <link href="{{ STATIC_URL }}css/style-mango.css" rel="stylesheet">  
+        <link href="{{ STATIC_URL }}css/themes/default.css" id="color-style" rel="stylesheet">  
+        <link href="{{ STATIC_URL }}css/style-responsive.css" rel="stylesheet">                                 
+
+        <!--[if lt IE 9]> <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script> <![endif]-->
+        
+        <link rel="shortcut icon" href="{{ STATIC_URL }}img/favicon.png">
+
+    
+    
+<!--
+        <div class="container">
+            <div class="masthead">
+
+                <div id="cabecera">
+                    {% block cabecera %}<center><img src='{{ STATIC_URL }}img/.png' width="450" height="200">
+                        
+                    </center>{% endblock %}
+                </div>
+
+-->
+
+   </head>
+<body>
+
+    {% if not user.is_authenticated %}
+      <a href="/users/login"></a>
+    {% endif %}
+{% block nav %}
+
+<!--END TEMPLATE SETTING--><!--BEGIN TO TOP--><a id="totop" href="#"><i class="fa fa-angle-up"></i></a><!--END BACK TO TOP-->
+<div id="wrapper"><!--BEGIN TOPBAR-->
+
+    {% if user.is_authenticated %}
+
+<!--BEGIN TEMPLATE SETTING--><!--
+    <div id="template-setting"><a href="#" data-toggle="dropdown" class="btn-template-setting"><i
+            class="fa fa-tint"></i></a>
+
+        <div class="content-template-setting"><h4 class="block-heading">Theme Colors</h4>
+            <ul class="color-theme list-unstyled list-inline">
+                <li data-style="red" data-hover="tooltip" title="Red" class="red"></li>
+                <li data-style="orange" data-hover="tooltip" title="Orange" class="orange"></li>
+                <li data-style="green" data-hover="tooltip" title="Green" class="green"></li>
+                <li data-style="yellow" data-hover="tooltip" title="Yellow" class="yellow"></li>
+                <li data-style="blue" data-hover="tooltip" title="Blue" class="blue"></li>
+                <li data-style="violet" data-hover="tooltip" title="Violet" class="violet"></li>
+                <li data-style="pink" data-hover="tooltip" title="Pink" class="pink"></li>
+                <li data-style="grey" data-hover="tooltip" title="Grey" class="grey"></li>
+                <li data-style="default" data-hover="tooltip" title="Dark" class="dark"></li>
+                <li data-style="white" data-hover="tooltip" title="White" class="white"></li>
+            </ul>
+        </div>
+    </div>-->
+
+        <nav id="topbar" role="navigation" style="margin-bottom: 0;" class="navbar navbar-default navbar-static-top">
+            <div class="navbar-header">
+                <button type="button" data-toggle="collapse" data-target=".sidebar-collapse" class="navbar-toggle"><span
+                        class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span
+                        class="icon-bar"></span><span class="icon-bar"></span></button>
+                <a id="logo" href="#" class="navbar-brand">HÁBLAME</a></div>
+            <div class="topbar-main"><a id="menu-toggle" href="#" class="btn hidden-xs"><i class="fa fa-bars"></i></a>
+<!--
+                <form id="topbar-search" action="#" method="" class="hidden-sm hidden-xs">
+                    <div class="input-icon right"><a href="#"><i class="fa fa-search"></i></a><input type="text"
+                      placeholder="Buscar..." class="form-control"/>
+                    </div>
+                </form>
+-->                
+ <ul class="nav navbar-top-links navbar-right">
+                    <li><a href="/cercanos" class="dropdown-toggle"><i
+                            class="fa fa-eye fa-fw"></i><span class="badge badge-yellow"></span></a>
+
+
+                    <li class="dropdown"><a data-toggle="dropdown" href="#" class="dropdown-toggle"><i
+                            class="fa fa-envelope fa-fw"></i><span class="badge badge-yellow"></span></a>
+                        <ul class="dropdown-menu dropdown-alerts animated bounceInDown">
+                            <li><a href="/mensajes/inbox"><span class="label label-blue"><i class="fa fa-inbox fa-fw"></i></span>Bandeja Entrada<span class="pull-right text-muted small"></span></a></li>
+                            <li><a href="/mensajes/outbox"><span class="label label-violet"><i class="fa fa-sign-out fa-fw"></i></span>
+                                Mensajes Enviados<span class="pull-right text-muted small"></span></a></li>
+                            <li><a href="/mensajes/compose"><span class="label label-pink"><i class="fa fa-envelope fa-fw"></i></span>Nuevo Mensaje<span class="pull-right text-muted small"></span></a></li>
+                            <li><a href="/mensajes/trash"><span class="label label-green"><i class="fa fa-trash-o fa-fw"></i></span>Papelera<span class="pull-right text-muted small"></span></a></li>
+
+                            <li><a href="#" class="text-right"></a></li>
+                        </ul>
+                    </li>                    
+
+                    <li><a href="/historial" class="dropdown-toggle"><i
+                            class="fa fa-comments fa-fw"></i><span class="badge badge-yellow"></span></a>
+
+                    </li>                       
+
+                    <li><a href="/timeline" class="dropdown-toggle"><i class="fa fa-cloud fa-fw"></i><span class="badge badge-blue"></span></a>
+                    </li>
+                    <li><a href="/comentarios" class="dropdown-toggle"><i class="fa fa-tasks fa-fw"></i><span class="badge badge-blue"></span></a>
+                    </li>                    
+                    <li class="dropdown hi"><a data-toggle="dropdown" href="" class="dropdown-toggle"><img
+                            src="{{ request.session.fotografia }}" alt="" class="img-responsive img-circle"/>&nbsp;
+                        {{user.username}}
+                        &nbsp;<span class="caret"></span></a>
+                        <ul class="dropdown-menu dropdown-user pull-right animated bounceInLeft">
+                            <li>
+                                <div class="navbar-content">
+                                    <div class="row">
+                                        <div class="col-md-5 col-xs-5"><img
+                                                src="{{ request.session.fotografia }}" alt=""
+                                                class="img-responsive img-circle"/>
+
+                                            <p class="text-center mtm"><a href="#" class="change-avatar">
+                                                <small></small>
+                                            </a></p>
+                                        </div>
+                                        <div class="col-md-7 col-xs-5"><span>{{user.username}}</span>
+
+                                            <p class="text-muted small">{{user.email}}</p>
+
+                                            <div class="divider"></div>
+                                            <a href="/perfiles/misperfiles" class="btn  btn-sm"></a></div>
+                                    </div>
+                                </div>
+                                <div class="navbar-footer">
+                                    <div class="navbar-footer-content">
+                                        <div class="row">
+                                            <div class="col-md-6 col-xs-6"><a href="/perfiles/misperfiles" class="btn btn-primary btn-sm">Ver Perfiles</a></div>
+                                            <div class="col-md-6 col-xs-6"><a href="/users/logout"
+                                                                              class="btn btn-default btn-sm pull-right">Log
+                                                Out</a></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+<!--END TOPBAR--><!--BEGIN SIDEBAR MENU-->    
+     
+        <nav id="sidebar" role="navigation" class="navbar-default navbar-static-side">
+            <div class="sidebar-collapse menu-scroll">
+                <ul id="side-menu" class="nav">
+                    <li class=""><strong id=""></strong>
+
+                        <div class="">
+                            <div id="" class=""></div>
+                            <span>:</span>
+
+                            <div id="" class=""></div>
+                            <span>:</span>
+
+                            <div id="" class=""></div>
+                        </div>
+                    </li>
+
+                    <li><a href="#"><i class="fa fa-laptop fa-fw"></i>&nbsp;Mis Cosas<span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+                        <li><a href='/diarios'><i class="fa fa-pencil-square-o fa-fw"></i>  Ver mi Diario</a></li></b>
+                    <!--    <ul><li><a href='/diarios/crear/'>Nueva Entrada de diario</a></li></ul> -->
+                        <li><a href='/agendas'><i class="fa fa-calendar-o fa-fw"></i> Ver mi Agenda</a></li></b>
+                    <!--    <ul><li><a href='/agendas/crear'>Nueva Entrada </a></li></ul> -->
+                        <li><a href='/frasescomun'><i class="fa fa-comments-o fa-fw"></i> Ver mis frases comunes</a></li>
+                    <!--    <ul><li><a href='/frasescomun/crear'>Nueva frase</a></li></ul> -->
+                        <li><a href='/archivos'><i class="fa fa-floppy-o fa-fw"></i> Ver mis archivos</a></li>
+                     <!--   <li><a href='/historial'>Ver mis chats</a></li> -->
+                        </ul>
+                    </li>
+                    <li><a href="#"><i class="fa fa-bookmark fa-fw"></i>&nbsp;
+                        Exprésate<span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+                       <li><a href='/pensamiento/crear'><i class="fa fa-plus-square-o fa-fw"></i>  Nuevo Pensamiento</a></li>
+                       <li><a href='/comentario/crear'><i class="fa fa-arrow-circle-o-right fa-fw"></i>  Nuevo comentario</a></li>
+                    </ul>
+                   </li>
+
+
+
+    {% endif %}
+
+
+    {% if user.is_staff %}
+
+
+
+            <li class="sidebar-heading"><h4>Extras</h4></li>
+                            <li><a href="/admin">Acceso Panel</a></li>
+                            <li><a href="/admin/doc">Ayuda django</a></li>
+                            <li><a href="/users/list">Gestión Usuarios</a></li>
+                            <li><a href="/frasescomun">Gestión Frases</a></li>
+                            <li><a href="/caracteristicas">Gestión Caracteristicas</a></li>                           
+                           <!-- <li class="active"><a href="dashboard-blog.html">Blog Dashboard</a></li>-->
+                        </ul>
+                    </li>
+    {% endif %}
+
+
+
+
+
+
+            </div>
+
+{% block nav2 %}
+{% endblock %}
+        </nav>
+
+
+
+{% endblock %}  
+{% block login %} 
+
+{% block contentChat %}
+
+        <!--END SIDEBAR MENU--><!--BEGIN PAGE WRAPPER-->
+        <div id="page-wrapper"><!--BEGIN PAGE HEADER & BREADCRUMB-->
+           <div class="page-content">
+                <div id="tab-general">
+                    <div class="row">
+                            <div class="panel">
+                                <div class="panel-body">
+                                    {% endblock %}
+
+                                       {% block content %}
+         
+
+                                         {% endblock %}
+
+
+    
+                                    </div>
+                                    </div>
+                                    </div>
+                                    </div>
+                                    </div>
+                                </div>
+{% endblock %}
+
+            <!--END PAGE HEADER & BREADCRUMB--><!--BEGIN CONTENT-->
+
+
+        <!--END PAGE WRAPPER--></div>
+
+
+
+</body>
+
+
+
+{% block footer %}<kbd>&copy; Ingenieria Web</kbd>{% endblock %}
+
+{% block extrafooter %}
+
+<script src="{{ STATIC_URL }}js/jquery-1.9.1.js"></script>
+<script src="{{ STATIC_URL }}js/jquery-migrate-1.2.1.min.js"></script>
+<script src="{{ STATIC_URL }}js/jquery-ui.js"></script>
+<!--loading bootstrap js-->
+<script src="{{ STATIC_URL }}vendors/bootstrap/js/bootstrap.min.js"></script>
+<script src="{{ STATIC_URL }}vendors/bootstrap-hover-dropdown/bootstrap-hover-dropdown.js"></script>
+<script src="{{ STATIC_URL }}js/html5shiv.js"></script>
+<script src="{{ STATIC_URL }}js/respond.min.js"></script>
+<script src="{{ STATIC_URL }}vendors/metisMenu/jquery.metisMenu.js"></script>
+<script src="{{ STATIC_URL }}vendors/slimScroll/jquery.slimscroll.js"></script>
+<script src="{{ STATIC_URL }}vendors/jquery-cookie/jquery.cookie.js"></script>
+<script src="{{ STATIC_URL }}js/jquery.menu.js"></script>
+<script src="{{ STATIC_URL }}vendors/jquery-pace/pace.min.js"></script>
+<!--LOADING SCRIPTS FOR PAGE-->
+<script src="{{ STATIC_URL }}vendors/jquery-jvectormap/jquery-jvectormap-1.2.2.min.js"></script>
+<script src="{{ STATIC_URL }}vendors/jquery-jvectormap/jquery-jvectormap-world-mill-en.js"></script>
+<script src="{{ STATIC_URL }}vendors/jquery-jvectormap/gdp-data.js"></script>
+<script src="{{ STATIC_URL }}vendors/jquery-knob/jquery.knob.js"></script>
+<script src="{{ STATIC_URL }}vendors/jquery-animateNumber/jquery.animateNumber.min.js"></script>
+<script src="{{ STATIC_URL }}vendors/flot-chart/jquery.flot.js"></script>
+<script src="{{ STATIC_URL }}vendors/flot-chart/jquery.flot.categories.js"></script>
+<script src="{{ STATIC_URL }}vendors/flot-chart/jquery.flot.pie.js"></script>
+<script src="{{ STATIC_URL }}vendors/flot-chart/jquery.flot.tooltip.js"></script>
+<script src="{{ STATIC_URL }}vendors/flot-chart/jquery.flot.resize.js"></script>
+<script src="{{ STATIC_URL }}vendors/flot-chart/jquery.flot.fillbetween.js"></script>
+<script src="{{ STATIC_URL }}vendors/flot-chart/jquery.flot.stack.js"></script>
+<script src="{{ STATIC_URL }}vendors/flot-chart/jquery.flot.spline.js"></script>
+<script src="{{ STATIC_URL }}vendors/skycons/skycons.js"></script>
+<script src="{{ STATIC_URL }}vendors/jquery-news-ticker/jquery.news-ticker.js"></script>
+<script src="{{ STATIC_URL }}js/index.js"></script>
+<!--CORE JAVASCRIPT-->
+<script src="{{ STATIC_URL }}js/app.js"></script>
+<script src="{{ STATIC_URL }}js/main2.js"></script>
+<script src="{{ STATIC_URL }}js/holder.js"></script>
+
+{% endblock %}
+
+{% block extrafooter2 %}
+
+{% endblock %}
+
+</html>
+

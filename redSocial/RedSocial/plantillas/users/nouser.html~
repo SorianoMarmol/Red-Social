@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% comment %} User login form {% endcomment %}
+
+{% block headings %} <h1>Access error</h1> {% endblock %}
+
+{% block contentcontainer %}{% endblock %}
+{% block sidebarcontainer %}{% endblock %}
+
+{% block content %}
+	<h2>Username not found or wrong password</h2>
+{% endblock %}

@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<em>En este apartado puedes ver los chats almacenados con el perfil que usted tiene seleccionado actualmente y acceder al chat en cuestión con su respectivo historial:</em> <br> <br>
+		
+
+
+			{% for perfilalias in perfilesunicos %} 
+ 				
+					<div class="well well-sm"><b><a href="/chat/{{perfilalias.0}}">{{ perfilalias.1 }}</a><b></div><br> 
+			
+ 
+ 
+				{% empty %}
+					<em><b> No hay chats almacenados actualmente con el perfil actualmente seleccionado </b></em>
+
+
+<br><br>
+			
+ 			{% endfor %}
+ 
+ {% endblock %}
+
+

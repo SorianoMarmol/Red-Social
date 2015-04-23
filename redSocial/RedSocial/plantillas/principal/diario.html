@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% block title %} Diario {% endblock %}
+
+{% block content %}
+
+<style>
+
+
+h2,  {
+	font-size: 20pt;
+	color: red;
+	padding-top: 12px;
+	padding-bottom: 3px;
+}
+
+#a{
+
+	color: red;
+	font-size: 20pt;
+	color: red;
+	padding-top: 12px;
+	padding-bottom: 3px;
+}	
+
+}
+</style>
+
+
+		<h2><p><a href='{% url 'diario_crear' %}' class='btn btn-primary btn-lg'>Nueva entrada de diario</a></p></h2>
+
+
+<div class="container-fluid">
+   
+
+
+
+		{% for diario in diarios %}
+
+ 			{% if user.username == diario.autor.username %}
+ 			<div class="row">
+
+ 		    <div class="col-xs-12 col-md-8">	
+
+ 				<h3>{{ diario.titulo }}</h3><br>
+ 				<img src="{{ STATIC_URL }}images/avatar/diario_img.png" width="120" height="110"alt="">
+				<a href='{% url 'diario_detalle' diario.id %}' class='btn btn-success btn-sm'>Ver Detalles</a>
+				<a href='{% url 'diario_editar' diario.id %}' class='btn btn-primary btn-sm'>Editar</a>
+				<a href='{% url 'diario_borrar' diario.id %}' class='btn btn-danger btn-sm'>Borrar</a>
+			</div>
+		</div>
+				<br>
+			{% endif %}
+		{% endfor %}
+
+</div>
+
+
+{% endblock %}

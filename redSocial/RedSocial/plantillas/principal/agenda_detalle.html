@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% comment %} Ver Detalle de Agenda {% endcomment %}
+
+{% block content %}
+
+		<p><a href="{% url "agendas" %}" class='btn btn-primary btn-lg'>Menu de Agendas</a></p>
+
+		<tr><td colspan="2"><h2>{{agenda.titulo}}</h2></td></tr>
+		<table class="table table-striped">
+		<tr><th>Fecha:</th><td> {{agenda.fecha|date:"D, d/m/y"}}</td></tr>
+		<tr><th>Hora:</th><td> {{agenda.hora}}</td></tr>
+		<tr><th>Lugar:</th><td> {{agenda.lugar}}</td></tr>
+		<tr><td colspan=2>
+			{% if agenda.descripcion %}
+				{{agenda.descripcion}}
+			{% else %}
+				No se ha incluido texto
+			{% endif %}
+		</td></tr></table>
+{% endblock %}
+
+ 

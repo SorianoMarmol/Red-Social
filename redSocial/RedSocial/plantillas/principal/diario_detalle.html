@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+{% block title %} Ver Detalle Diario {% endblock %}
+{% block content %}
+
+<style>
+
+
+h2{
+	font-size: 20pt;
+	color: red;
+	padding-top: 12px;
+	padding-bottom: 3px;
+}
+
+#a{
+
+	color: red;
+	font-size: 20pt;
+	color: red;
+	padding-top: 12px;
+	padding-bottom: 3px;
+}	
+
+}
+</style>
+
+		<p><a href="{% url "diarios" %}" class='btn btn-primary btn-lg'>Volver a Menu de Diarios</a></p>
+
+
+		<tr><td colspan="2"><h2>{{diario.titulo}}</h2></td></tr>
+		<table class="table table-striped">
+		<tr><th>Fecha:</th><td> {{diario.fecha|date:"D, d/m/y"}}</td></tr>
+		<tr><th>Hora:</th><td> {{diario.hora}}</td></tr>
+		<tr><th>Lugar:</th><td> {{diario.lugar}}</td></tr>
+		<tr><td colspan=2><img src="{{ MEDIA_URL }}{{diario.imagen}}" alt="">
+		</td></tr>
+		<tr><td colspan=2>
+			{% if diario.texto %}
+				{{diario.texto}}
+			{% else %}
+				No se ha incluido texto
+			{% endif %}
+		</td></tr></table>
+
+
+ {% endblock %}
+
+
+
+
+
+
+<!--
+<html>
+	<head>
+		<title>Detalle Pregunta</title>
+	</head>
+	<body>
+		<h2>{{pregunta.asunto}}?</h2>
+		<p><b>Publicado:</b> {{pregunta.fecha_publicacion|date:"D, d/m/y"}}</p>
+		<p>
+			{% if pregunta.descripcion %}
+				{{pregunta.descripcion}}
+			{% else %}
+				No se ha incluido descripcion
+			{% endif %}
+		</p>
+<br> <img src="{{ diario.imagen }}" width="120" height="110"alt=""> 
+		<h3>Respuestas</h3>
+		<ul>
+			{% for r in pregunta.respuesta_set.all %}
+				<li>{{respuesta.contenido|safe}}</li>
+			{% empty %}
+				<li>Aún no hay respuestas</li>
+			{% endfor %}
+		</ul>
+	</body>
+</html>
+-->

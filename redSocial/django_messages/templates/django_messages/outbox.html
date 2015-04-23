@@ -1,0 +1,29 @@
+{% extends "django_messages/base.html" %} 
+{% load i18n %} 
+{% load url from future %}
+
+{% block content %} 
+ 
+{% if message_list %} 
+<div class="panel panel-default">
+  <div class="panel-heading">Mensajes Enviados</div>
+
+  <table class="table">
+        <tr><th>{% trans "Recipient" %}</th><th>{% trans "Subject" %}</th><th>{% trans "Sent" %}</th><th>{% trans "Action" %}</th></tr>
+
+{% for message in message_list %} 
+    <tr>
+        <td>{{ message.recipient }}</td>
+        <td>
+        <a href="{{ message.get_absolute_url }}">{{ message.subject }}</a>
+        </td>
+        <td>{{ message.sent_at|date:_("DATETIME_FORMAT") }}</td>
+        <td><a href="{% url 'messages_delete' message.id %}?next={% url 'messages_outbox' %}">{% trans "delete" %}</a></td>
+    </tr>
+{% endfor %}
+    </div>
+</table>
+{% else %}
+<p>{% trans "Bandeja de salida vacía." %}</p>
+{% endif %}   
+{% endblock %}

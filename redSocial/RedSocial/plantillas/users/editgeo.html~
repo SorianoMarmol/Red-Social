@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% comment %} User input form {% endcomment %}
+
+
+{% block content %}
+
+
+{% block localscripts %}
+<body onload="obtener_localizacion();">
+<script language="javascript">
+function obtener_localizacion() {
+
+  navigator.geolocation.getCurrentPosition(coordenadas);
+}
+function coordenadas(position) {
+  var latitud = position.coords.latitude;
+  var longitud = position.coords.longitude;
+
+  document.getElementById("id_coordy").value=longitud;
+  document.getElementById("id_coordx").value=latitud;
+  window.alert("I am an alert box!");
+
+}
+</script>
+
+
+
+{% endblock %}
+
+
+	<form id='form' method='post' enctype='multipart/form-data' action=''>{% csrf_token %}
+	    <table class='formTable'>{{form}}</table>
+
+		<p><input type='submit' value='Su ubicación ha sido actualizada'></p>
+	</form>
+{% endblock %}

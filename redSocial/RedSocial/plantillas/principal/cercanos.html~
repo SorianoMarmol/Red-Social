@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+			{% for user2 in cercanos %}
+
+				<a href="/users/verusuario/{{user2.id}}">{{user2.alias}})</a>		    	
+		<a href="/users/delete/{{user2.id}}">Borrar usuario</a>
+			<br>
+			{% endfor %}
+	    	{% endif %}
+	{% endif %}
+	<br>
+	{% if userList.has_previous %}
+		<a href="?page={{ userList.previous_page_number }}"> Anterior </a>
+	{% else %}
+	
+	{% if userList.has_next %}
+		<a href="?page={{ userList.next_page_number }}">Siguiente </a>
+	{% endif %}
+
+	
+{% endblock %}
+
+{% block aside %}
+	{% if user.is_authenticated %}
+		<form action="/users/new"><input type="submit" value="Nuevo usuario"></form>
+	{% endif %}
+{% endblock %}

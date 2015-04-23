@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% comment %} Ver Detalle de Frase Comun {% endcomment %}
+
+{% block content %}
+		<p><a href="/frasescomun" class='btn btn-info btn-lg'>Volver al listado de Frases Comunes</a></p><br><br>
+	{% if user.is_staff %}
+		<h2>ID: {{frasecomun.id}}.<br><br>
+		<textarea> {{frasecomun.texto}}</textarea><br>
+		¿Es general?: {{frasecomun.esGeneral}} <br><br>
+		<em>Autor: {{frasecomun.autor}} <br></em>
+	{% else %}
+
+		<h4>Texto:</h4><br>
+		<textarea> {{frasecomun.texto}}</textarea><br>
+		<em>Autor: {{frasecomun.autor}} <br></em>
+
+	{% endif %}
+{% endblock %}

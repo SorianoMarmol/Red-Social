@@ -1,0 +1,35 @@
+{% extends "django_messages/base.html" %} 
+{% load i18n %} 
+{% load url from future %}
+
+{% block content %} 
+ 
+{% if message_list %} 
+<div class="panel panel-default">
+  <div class="panel-heading">Papelera</div>
+
+  <table class="table">
+        <tr><th>{% trans "Sender" %}</th><th>{% trans "Subject" %}</th><th>{% trans "Date" %}</th><th>{% trans "Action" %}</th></tr>
+
+{% for message in message_list %} 
+    <tr>
+        <td>{{ message.sender }}</td>
+        <td> 
+        {{ message.subject }}
+        </td>
+        <td>{{ message.sent_at|date:_("DATETIME_FORMAT") }}</td>
+        <td><a href="{% url 'messages_undelete' message.id %}">  {% trans "undelete" %}</a></td>
+    </tr>
+{% endfor %}
+    </div>
+</table>
+{% else %}
+<p>{% trans "No messages." %}</p>
+{% endif %}   
+<br />
+<br><br>
+<ol id="sample" class="ticker">
+                                            
+<li>{% trans "Deleted Messages are removed from the trash at unregular intervals, don't rely on this feature for long-time storage." %}</li>
+</ol>
+{% endblock %}
