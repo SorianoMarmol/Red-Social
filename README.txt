@@ -1,3 +1,11 @@
+Proyecto realizado para la asignatura Ingeniería Web, Grado en Ingeniería Informática, Universidad de Córdoba.
+
+Se trata de una Red Social que incluye aspectos de geoposicionamiento, varios perfiles por un usuario
+(con funcionalidades adaptadas según el perfil), interacción con usuarios cercanos y resposive. 
+Acciones a destacar entre usuarios: Chat, Envío de archivos, envío de mensajes y sistema de votaciones.
+
+Se adjunta la documentación realizada también para la asignatura.
+
 ﻿=========================================================
 =========================================================
 ==							==
